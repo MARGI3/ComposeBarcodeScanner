@@ -21,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.compose.barcodescanner.R
+import com.compose.barcodescanner.scanner.presentation.model.BarCodeResult
 import com.compose.barcodescanner.scanner.presentation.model.BarcodeScannerBottomSheetState
 import com.compose.barcodescanner.scanner.presentation.model.InformationModel
 import com.compose.barcodescanner.ui.theme.Purple200
@@ -52,6 +54,7 @@ fun BarcodeScannerBottomSheetLayout(
                 }
                 is BarcodeScannerBottomSheetState.Expanded -> {
                     BarcodeScannerInformationLayout(
+                        barCodeResult = resultBottomSheetStateModel.barcodeResult,
                         informationModel = resultBottomSheetStateModel.information,
                         onCloseIconClicked = onCloseIconClicked,
                     )
@@ -111,13 +114,14 @@ fun BottomSheetHeaderLayout(
                 .align(Alignment.End)
                 .clickable(onClick = onCloseIconClicked),
             painter = painterResource(id = R.drawable.ic_close_black),
-            contentDescription = "Bottom Sheet Drag Handle"
+            contentDescription = "Bottom Sheet Close Icon"
         )
     }
 }
 
 @Composable
 fun BarcodeScannerInformationLayout(
+    barCodeResult: BarCodeResult,
     informationModel: InformationModel,
     onCloseIconClicked: () -> Unit = {},
 ) {
@@ -131,13 +135,15 @@ fun BarcodeScannerInformationLayout(
         BottomSheetHeaderLayout(onCloseIconClicked = onCloseIconClicked)
 
         Text(
+            modifier = Modifier.padding(24.dp),
             text = informationModel.propertyOne,
+            textAlign = TextAlign.Center,
         )
 
-        Spacer(modifier = Modifier.height(200.dp))
-
         Text(
-            text = informationModel.propertyOne,
+            modifier = Modifier.padding(24.dp),
+            text = "barcodeResult - ${barCodeResult.barCode.displayValue}",
+            textAlign = TextAlign.Center,
         )
     }
 }

@@ -2,6 +2,7 @@ package com.compose.barcodescanner
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.camera.core.ExperimentalGetImage
@@ -35,6 +36,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BarcodeScannerScreen(viewModel = viewModel)
+        }
+        setupBackButtonCallback()
+        observeOnViewModel()
+    }
+
+    private fun setupBackButtonCallback() {
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.onBackButtonClicked()
+            }
+        })
+    }
+
+    private fun observeOnViewModel() {
+        viewModel.popBackStack.observe(this) {
+            this.finish()
         }
     }
 }

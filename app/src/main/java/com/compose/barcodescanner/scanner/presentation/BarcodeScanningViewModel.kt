@@ -55,10 +55,6 @@ class BarcodeScanningViewModel constructor(
         setupImageAnalyzer()
     }
 
-    override fun onResume(owner: LifecycleOwner) {
-        super.onResume(owner)
-    }
-
     fun onBackButtonClicked() {
         if (isResultBottomSheetShowing) {
             _resultBottomSheetState.value = BarcodeScannerBottomSheetState.Hidden
@@ -154,8 +150,8 @@ class BarcodeScanningViewModel constructor(
         _resultBottomSheetState.value = BarcodeScannerBottomSheetState.Expanded(
             barcodeResult = barcodeResult,
             information = InformationModel(
-                propertyOne = "This is mock information fetched from sever",
-                propertyTwo = "This is mock information fetched from sever"
+                propertyOne = "This is mock information fetched from server",
+                propertyTwo = "This is mock information fetched from server"
             )
         )
         this.barcodeResult = barcodeResult

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-suspend fun Context.getCameraXProvider(timeOutLong: Long = 3000): ProcessCameraProvider = suspendCoroutine { continuation ->
+suspend fun Context.getCameraXProvider(timeOutLong: Long = 5000): ProcessCameraProvider = suspendCoroutine { continuation ->
     ProcessCameraProvider.getInstance(this).also { future ->
         future.addListener(
             {

@@ -35,7 +35,6 @@ import com.compose.barcodescanner.R
 import com.compose.barcodescanner.scanner.presentation.model.BarcodeScannerBottomSheetState
 import com.compose.barcodescanner.scanner.presentation.model.ScanningResult
 import com.compose.barcodescanner.ui.theme.ComposeBarcodeScannerTheme
-import com.compose.barcodescanner.ui.theme.Purple200
 import com.compose.barcodescanner.ui.theme.Purple700
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
@@ -120,6 +119,7 @@ fun BarcodeScannerScreen(
                     ) {
                         IconButton(
                             onClick = {
+                                viewModel.onToolbarCloseIconClicked()
                             }
                         ) {
                             Icon(
