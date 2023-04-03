@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ComposeBarcodeScanner</string>
+
+    <string name="point_your_camera_at_a_barcode">Point your camera at a barcode</string>
+    <string name="move_your_camera_to_place_the_barcode_in_the_frame">Move the barcode in the frame</string>
+    <string name="move_closer_to_the_barcode">Move closer to the barcode</string>
+    <string name="loading_the_result">Loading the result</string>
+    <string name="loading_product_result_error_generic">Please try again later</string>
+
+    <string name="camera_permission_is_denied">Camera Permission is denied</string>
 </resources>

@@ -3,41 +3,38 @@ package com.compose.barcodescanner
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.compose.barcodescanner.ui.theme.ComposeBarcodeScannerTheme
+import androidx.activity.viewModels
+import androidx.camera.core.ExperimentalGetImage
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.compose.barcodescanner.scanner.presentation.BarcodeScannerScreen
+import com.compose.barcodescanner.scanner.presentation.BarcodeScanningViewModel
 
+@ExperimentalGetImage
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ComposeBarcodeScannerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+
+    private val barcodeScanner = DependencyProvider.provideBarcodeScanner()
+
+    private val viewModel by viewModels<BarcodeScanningViewModel>(
+        factoryProducer = {
+            viewModelFactory {
+                initializer {
+                    BarcodeScanningViewModel(
+                        barcodeScanner = barcodeScanner,
+                        barcodeImageAnalyzer = DependencyProvider.provideBarcodeImageAnalyzer(
+                            barcodeScanner
+                        ),
+                        barcodeResultBoundaryAnalyzer = DependencyProvider.provideBarcodeResultBoundaryAnalyzer()
+                    )
                 }
             }
         }
-    }
-}
+    )
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ComposeBarcodeScannerTheme {
-        Greeting("Android")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            BarcodeScannerScreen(viewModel = viewModel)
+        }
     }
 }
